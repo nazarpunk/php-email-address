@@ -9,4 +9,9 @@ enum EmailError
     case domain;
     case min;
     case max;
+    case symbol;
+    case letter;
+    case first;
+    case last;
+    case norepeat;
 }

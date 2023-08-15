@@ -22,8 +22,8 @@ class Email
     /** originally provided email */
     public string $origin;
 
-    /** local part of email */
-    public string $local;
+    /** user part of email */
+    public string $user;
 
     /** domain part of email */
     public string $domain;
@@ -41,7 +41,7 @@ class Email
         $list = explode('@', $this->origin);
         if (count($list) != 2) return EmailError::at;
 
-        $this->local = mb_strtolower($list[0]);
+        $this->user = mb_strtolower($list[0]);
         $this->domain = mb_strtolower($list[1]);
 
         switch ($this->domain) {
@@ -73,20 +73,26 @@ class Email
         }
 
 
-        if ($this->provider->nodot) $this->local = str_replace('.', '', $this->local);
+        if ($this->provider->nodot) $this->user = str_replace('.', '', $this->user);
         if ($this->provider->noplus) {
-            $pos = mb_strpos($this->local, '+');
-            if ($pos !== false) $this->local = substr($this->local, 0, $pos);
+            $pos = mb_strpos($this->user, '+');
+            if ($pos !== false) $this->user = substr($this->user, 0, $pos);
         }
 
-        $length = mb_strlen($this->local);
+        $length = mb_strlen($this->user);
         if ($length < $this->provider->min) return EmailError::min;
         if ($length > $this->provider->max) return EmailError::max;
 
-        if ($this->provider->letter > 0) {
+        if (!preg_match($this->provider->symbols, $this->user)) return EmailError::symbol;
+        if (!preg_match($this->provider->first, $this->user)) return EmailError::first;
+        if (!preg_match($this->provider->last, $this->user)) return EmailError::last;
 
-        }
+        if ($this->provider->letter > 0 && $this->provider->letter <= mb_strlen($this->user) && preg_match('/^[^a-z]+$/', $this->user)) return EmailError::letter;
 
+        if ($this->provider->norepeat && preg_match('/[._-][._-]/', $this->user)) return EmailError::norepeat;
+
+
+        $this->email = $this->user . '@' . $this->domain;
 
         return null;
     }
