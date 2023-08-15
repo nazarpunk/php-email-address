@@ -1,0 +1,24 @@
+{
+  "name": "nazarpunk/email-adress",
+  "description": "Generate random password of a given length",
+  "type": "library",
+  "require": {
+    "php": ">=8.1.2"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "nazarpunk",
+      "email": "nazarpunk@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "EmailAdress\\": "src/"
+    },
+    "files": [
+      "src/EmailAdress/Email.php"
+    ]
+  },
+  "minimum-stability": "dev"
+}
