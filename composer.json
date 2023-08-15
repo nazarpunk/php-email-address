@@ -1,5 +1,5 @@
 {
-  "name": "nazarpunk/email-adress",
+  "name": "nazarpunk/email-address",
   "description": "Generate random password of a given length",
   "type": "library",
   "require": {

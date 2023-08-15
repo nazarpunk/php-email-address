@@ -9,5 +9,7 @@ class Base
     public bool $noplus = false;
     public int $min = 1;
     public int $max = 64;
+
+    /** count non letter symbol to need letter */
     public int $letter = 0;
 }

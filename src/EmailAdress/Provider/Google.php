@@ -10,4 +10,6 @@ class Google extends Base
 
     public int $min = 6;
     public int $max = 30;
+
+    public int $letter = 8;
 }

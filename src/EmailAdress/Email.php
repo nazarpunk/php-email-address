@@ -13,29 +13,33 @@ class Email
     public function __construct(string $email)
     {
         $this->origin = trim($email);
-        $this->is_error = !$this->sanitize();
+        $this->error = $this->sanitize();
     }
 
-    public bool $is_error = false;
+    /** error when parse */
+    public ?EmailError $error = null;
+
+    /** originally provided email */
     public string $origin;
+
+    /** local part of email */
     public string $local;
+
+    /** domain part of email */
     public string $domain;
+
+    /** sanitized email */
+    public string $email;
+
+    /** email provider */
     public Base $provider;
-
-    private function error(): bool
-    {
-
-        return false;
-    }
 
     // https://developer.roman.grinyov.name/blog/92
 
-    private function sanitize(): bool
+    private function sanitize(): ?EmailError
     {
-        var_dump($this->origin);
-
         $list = explode('@', $this->origin);
-        if (count($list) != 2) return $this->error();
+        if (count($list) != 2) return EmailError::at;
 
         $this->local = mb_strtolower($list[0]);
         $this->domain = mb_strtolower($list[1]);
@@ -65,7 +69,7 @@ class Email
             default:
                 $this->provider = new Base();
                 // https://stackoverflow.com/a/16491074/12800371
-                if (!preg_match('/^(?!-)(?:(?:[a-zA-Z\d][a-zA-Z\d\-]{0,61})?[a-zA-Z\d]\.){1,126}(?!\d+)[a-zA-Z\d]{1,63}$/', $this->domain)) return $this->error();
+                if (!preg_match('/^(?!-)(?:(?:[a-zA-Z\d][a-zA-Z\d\-]{0,61})?[a-zA-Z\d]\.){1,126}(?!\d+)[a-zA-Z\d]{1,63}$/', $this->domain)) return EmailError::domain;
         }
 
 
@@ -76,10 +80,14 @@ class Email
         }
 
         $length = mb_strlen($this->local);
-        if ($length < $this->provider->min) return $this->error();
-        if ($length > $this->provider->max) return $this->error();
+        if ($length < $this->provider->min) return EmailError::min;
+        if ($length > $this->provider->max) return EmailError::max;
+
+        if ($this->provider->letter > 0) {
+
+        }
 
 
-        return true;
+        return null;
     }
 }
