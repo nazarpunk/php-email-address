@@ -6,6 +6,8 @@ namespace EmailAdress\EmailAdress;
 use EmailAdress\EmailAdress\Provider\Base;
 use EmailAdress\EmailAdress\Provider\Google;
 use EmailAdress\EmailAdress\Provider\Mailru;
+use EmailAdress\EmailAdress\Provider\Rambler;
+use EmailAdress\EmailAdress\Provider\Vk;
 use EmailAdress\EmailAdress\Provider\Yandex;
 
 class Email
@@ -66,6 +68,17 @@ class Email
             case 'list.ru':
                 $this->provider = new Mailru();
                 break;
+            case 'ro.ru':
+            case 'rambler.ru':
+            case 'rambler.ua':
+            case 'autorambler.ru':
+            case 'myrambler.ru':
+                $this->provider = new Rambler();
+                break;
+            case 'vk.com':
+                // https://vk.com/faq18038
+                $this->provider = new Vk();
+                break;
             default:
                 $this->provider = new Base();
                 // https://stackoverflow.com/a/16491074/12800371
@@ -74,7 +87,7 @@ class Email
 
 
         if ($this->provider->nodot) $this->user = str_replace('.', '', $this->user);
-        if ($this->provider->noplus) {
+        if ($this->provider->details) {
             $pos = mb_strpos($this->user, '+');
             if ($pos !== false) $this->user = substr($this->user, 0, $pos);
         }
@@ -89,7 +102,7 @@ class Email
 
         if ($this->provider->letter > 0 && $this->provider->letter <= mb_strlen($this->user) && preg_match('/^[^a-z]+$/', $this->user)) return EmailError::letter;
 
-        if ($this->provider->norepeat && preg_match('/[._-][._-]/', $this->user)) return EmailError::norepeat;
+        if (preg_match('/[._-][._-]/', $this->user)) return EmailError::norepeat;
 
 
         $this->email = $this->user . '@' . $this->domain;

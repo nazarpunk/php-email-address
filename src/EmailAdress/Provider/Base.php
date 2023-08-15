@@ -9,10 +9,7 @@ class Base
 
     /** true: remove all dots */
     public bool $nodot = false;
-    /** true: remove all after + symbols */
-    public bool $noplus = false;
-    /** true: prevent repeat ._- symbols */
-    public bool $norepeat = false;
+    public bool $details = true;
     public int $min = 1;
     public int $max = 64;
     /** count non letter symbol to need letter */

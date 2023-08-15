@@ -3,12 +3,14 @@ declare(strict_types=1);
 
 namespace EmailAdress\EmailAdress\Provider;
 
-class Yandex extends Base
+class Vk extends Base
 {
-    public ?string $name = 'yandex';
-    public int $max = 30;
+    public ?string $name = 'vk';
+    public int $min = 5;
+    public int $max = 31;
     public string $first = /** @lang RegExp */
-        '/^[a-z]/';
+        '/[a-z0-9]$/';
     public string $last = /** @lang RegExp */
         '/[a-z0-9]$/';
+
 }

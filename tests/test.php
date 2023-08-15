@@ -12,7 +12,7 @@ use EmailAdress\EmailAdress\Email;
 echo '<pre>';
 echo '<style>:root{color-scheme: dark}</style><pre>';
 
-$adress = new Email('sDDSDSD123.4.5-3.3._44QEQE6781+cddc1.@narod.ru');
+$adress = new Email('razgulay60-2@mail.ru');
 
 var_dump($adress);
 
