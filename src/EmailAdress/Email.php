@@ -3,15 +3,6 @@ declare(strict_types=1);
 
 namespace EmailAdress\EmailAdress;
 
-use EmailAdress\EmailAdress\Provider\Aol;
-use EmailAdress\EmailAdress\Provider\Base;
-use EmailAdress\EmailAdress\Provider\Google;
-use EmailAdress\EmailAdress\Provider\Mailru;
-use EmailAdress\EmailAdress\Provider\Rambler;
-use EmailAdress\EmailAdress\Provider\Vk;
-use EmailAdress\EmailAdress\Provider\Yahoo;
-use EmailAdress\EmailAdress\Provider\Yandex;
-
 // https://en.wikipedia.org/wiki/Comparison_of_webmail_providers
 
 class Email
@@ -38,7 +29,7 @@ class Email
     public string $email;
 
     /** email provider */
-    public Base $provider;
+    public Provider $provider;
 
     // https://developer.roman.grinyov.name/blog/92
 
@@ -54,7 +45,7 @@ class Email
             case 'gmail.com':
             case 'googlemail.com':
                 $this->domain = 'gmail.com';
-                $this->provider = new Google();
+                $this->provider = new Provider(name: 'google', min: 6, max: 30, chars: /* @lang RegExp */ '/^[a-z0-9]+$/', first: /** @lang RegExp */ '/^[a-z0-9]/', last: /* @lang RegExp */ '/[a-z0-9]$/', nodot: true, letter: 8);
                 break;
             case 'ya.ru':
             case 'yandex.ru':
@@ -63,35 +54,38 @@ class Email
             case 'yandex.kz':
             case 'narod.ru':
                 $this->domain = 'ya.ru';
-                $this->provider = new Yandex();
+                $this->provider = new Provider(name: 'yandex', min: 1, max: 30, first: /* @lang RegExp */ '/^[a-z]/', last: /* @lang RegExp */ '/[a-z0-9]$/');
                 break;
             case 'mail.ru':
             case 'internet.ru':
             case 'bk.ru':
             case 'inbox.ru':
             case 'list.ru':
-                $this->provider = new Mailru();
+                $this->provider = new Provider(name: 'mailru', min: 5, max: 31, first: /* @lang RegExp */ '/[a-z0-9]$/', last: /* @lang RegExp */ '/[a-z0-9]$/');
                 break;
             case 'vk.com':
-                $this->provider = new Vk(); // https://vk.com/faq18038
+                $this->provider = new Provider(name: 'vk', min: 5, max: 31, first: /* @lang RegExp */ '/[a-z0-9]$/', last: /* @lang RegExp */ '/[a-z0-9]$/');
                 break;
             case 'ro.ru':
             case 'rambler.ru':
             case 'rambler.ua':
             case 'autorambler.ru':
             case 'myrambler.ru':
-                $this->provider = new Rambler();
+                $this->provider = new Provider(name: 'rambler', min: 3, max: 32, first: /* @lang RegExp */ '/[a-z0-9]$/', last: /* @lang RegExp */ '/[a-z0-9]$/', details: false);
                 break;
             case 'yahoo.com':
             case 'ymail.com':
             case 'rocketmail.com':
-                $this->provider = new Yahoo();
+                $this->provider = new Provider(name: 'yahoo', min: 4, max: 32, chars: /** @lang RegExp */ '/^[a-z0-9._]+$/', first: /* @lang RegExp */ '/^[a-z]/', last: /* @lang RegExp */ '/[a-z0-9]$/', details: false, unique_schar: true);
                 break;
             case 'aol.com':
-                $this->provider = new Aol();
+                $this->provider = new Provider(name: 'aol', min: 4, max: 32, chars: /* @lang RegExp */ '/^[a-z0-9._]+$/', first: /* @lang RegExp */ '/^[a-z]/', last: /* @lang RegExp */ '/[a-z0-9]$/', details: false, unique_schar: true);
+                break;
+            case 'hotmail.com':
+                $this->provider = new Provider(name: 'microsoft', min: 4, max: 31);
                 break;
             default:
-                $this->provider = new Base();
+                $this->provider = new Provider(name: null, min: 1, max: 64, details: false);
                 // https://stackoverflow.com/a/16491074/12800371
                 if (!preg_match('/^(?!-)(?:(?:[a-zA-Z\d][a-zA-Z\d\-]{0,61})?[a-zA-Z\d]\.){1,126}(?!\d+)[a-zA-Z\d]{1,63}$/', $this->domain)) return EmailError::domain;
         }
@@ -107,7 +101,7 @@ class Email
         if ($length < $this->provider->min) return EmailError::min;
         if ($length > $this->provider->max) return EmailError::max;
 
-        if (!preg_match($this->provider->chars, $this->user)) return EmailError::symbol;
+        if (!preg_match($this->provider->chars, $this->user)) return EmailError::chars;
         if (!preg_match($this->provider->first, $this->user)) return EmailError::first;
         if (!preg_match($this->provider->last, $this->user)) return EmailError::last;
 

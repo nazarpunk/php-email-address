@@ -34,15 +34,16 @@
 - **u** - возможно ли использовать больше одного вхождения `._-`:   ✅ да, ⛔ нет..
 - **d** - количество спецзнаков, при котором требуется как минимум одна буква.
 
-|         | min | max | all       | first  | last   | .  | + | r | u | d |
-|---------|-----|-----|-----------|--------|--------|----|---|---|---|---|
-| Google  | 6   | 30  | a-z0-9    | a-z0-9 | a-z0-9 | ⛔️ | ✅ | ⛔ | ✅ | 8 |
-| Yandex  | 1   | 30  | a-z0-9._- | a-z    | a-z0-9 | ✅  | ✅ | ⛔ | ✅ |   |
-| Mail.ru | 5   | 31  | a-z0-9._- | a-z0-9 | a-z0-9 | ✅  | ✅ | ⛔ | ✅ |   |
-| Vk      | 5   | 32  | a-z0-9._- | a-z0-9 | a-z0-9 | ✅  | ✅ | ⛔ | ✅ |   |
-| Rambler | 3   | 32  | a-z0-9._- | a-z0-9 | a-z0-9 | ✅  | ⛔ | ⛔ | ✅ |   |
-| Yahoo   | 4   | 32  | a-z0-9._  | a-z0-9 | a-z0-9 | ✅  | ⛔ | ⛔ | ⛔ |   |
-| AOL     | 4   | 32  | a-z0-9._  | a-z    | a-z0-9 | ✅  | ⛔ | ⛔ | ⛔ |   |
+|           | min | max | all       | first  | last     | .  | + | r | u | d |
+|-----------|-----|-----|-----------|--------|----------|----|---|---|---|---|
+| Google    | 6   | 30  | a-z0-9    | a-z0-9 | a-z0-9   | ⛔️ | ✅ | ⛔ | ✅ | 8 |
+| Yandex    | 1   | 30  | a-z0-9._- | a-z    | a-z0-9   | ✅  | ✅ | ⛔ | ✅ |   |
+| Mail.ru   | 5   | 31  | a-z0-9._- | a-z0-9 | a-z0-9   | ✅  | ✅ | ⛔ | ✅ |   |
+| Vk        | 5   | 31  | a-z0-9._- | a-z0-9 | a-z0-9   | ✅  | ✅ | ⛔ | ✅ |   |
+| Rambler   | 3   | 32  | a-z0-9._- | a-z0-9 | a-z0-9   | ✅  | ⛔ | ⛔ | ✅ |   |
+| Yahoo     | 4   | 32  | a-z0-9._  | a-z0-9 | a-z0-9   | ✅  | ⛔ | ⛔ | ⛔ |   |
+| AOL       | 4   | 32  | a-z0-9._  | a-z    | a-z0-9   | ✅  | ⛔ | ⛔ | ⛔ |   |
+| Microsoft | 4   | 31  | a-z0-9._- | a-z    | 0-9a-z_- | ✅  | ⛔ | ⛔ | ⛔ |   |
 
 - *Всё выше перечисленное относится только к **user** части*.
 - *Все email принято приводить к нижнему регистру, так что изначально предполагаем, что это было заранее сделано.*
@@ -53,33 +54,33 @@
 
 - **m** - привязаны ли все домены к одному аккаунту: ✅ да, ⛔ нет.
 
-|         | m |                |
-|---------|---|----------------|
-| Google  | ✅ | gmail.com      |
-|         |   | googlemail.com |
-| Yandex  | ✅ | ya.ru          |
-|         |   | yandex.ru      |
-|         |   | yandex.by      |
-|         |   | yandex.com     |
-|         |   | yandex.kz      |
-|         |   | narod.ru       |
-| Mail.ru | ⛔ | mail.ru        |
-|         |   | internet.ru    |
-|         |   | bk.ru          |
-|         |   | inbox.ru       |
-|         |   | list.ru        |
-| Vk      | ⛔ | vk.com         |
-| Rambler | ⛔ | rambler.ru     |
-|         |   | ro.ru          |
-|         |   | rambler.ua     |
-|         |   | autorambler.ru |
-|         |   | myrambler.ru   |
-| Yahoo   | ⛔ | yahoo.com      |
-|         |   | ymail.com      |
-|         |   | rocketmail.com |
-| AOL     | ⛔ | aol.com        |
-|         |   |                |
-|         |   |                |
-|         |   |                |
-|         |   |                |
-|         |   |                |
+|           | m |                |
+|-----------|---|----------------|
+| Google    | ✅ | gmail.com      |
+|           |   | googlemail.com |
+| Yandex    | ✅ | ya.ru          |
+|           |   | yandex.ru      |
+|           |   | yandex.by      |
+|           |   | yandex.com     |
+|           |   | yandex.kz      |
+|           |   | narod.ru       |
+| Mail.ru   | ⛔ | mail.ru        |
+|           |   | internet.ru    |
+|           |   | bk.ru          |
+|           |   | inbox.ru       |
+|           |   | list.ru        |
+| Vk        | ⛔ | vk.com         |
+| Rambler   | ⛔ | rambler.ru     |
+|           |   | ro.ru          |
+|           |   | rambler.ua     |
+|           |   | autorambler.ru |
+|           |   | myrambler.ru   |
+| Yahoo     | ⛔ | yahoo.com      |
+|           |   | ymail.com      |
+|           |   | rocketmail.com |
+| AOL       | ⛔ | aol.com        |
+| Microsoft | ⛔ | hotmail.com    |
+|           |   |                |
+|           |   |                |
+|           |   |                |
+|           |   |                |
