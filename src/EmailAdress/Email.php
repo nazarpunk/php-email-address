@@ -3,12 +3,16 @@ declare(strict_types=1);
 
 namespace EmailAdress\EmailAdress;
 
+use EmailAdress\EmailAdress\Provider\Aol;
 use EmailAdress\EmailAdress\Provider\Base;
 use EmailAdress\EmailAdress\Provider\Google;
 use EmailAdress\EmailAdress\Provider\Mailru;
 use EmailAdress\EmailAdress\Provider\Rambler;
 use EmailAdress\EmailAdress\Provider\Vk;
+use EmailAdress\EmailAdress\Provider\Yahoo;
 use EmailAdress\EmailAdress\Provider\Yandex;
+
+// https://en.wikipedia.org/wiki/Comparison_of_webmail_providers
 
 class Email
 {
@@ -68,6 +72,9 @@ class Email
             case 'list.ru':
                 $this->provider = new Mailru();
                 break;
+            case 'vk.com':
+                $this->provider = new Vk(); // https://vk.com/faq18038
+                break;
             case 'ro.ru':
             case 'rambler.ru':
             case 'rambler.ua':
@@ -75,9 +82,13 @@ class Email
             case 'myrambler.ru':
                 $this->provider = new Rambler();
                 break;
-            case 'vk.com':
-                // https://vk.com/faq18038
-                $this->provider = new Vk();
+            case 'yahoo.com':
+            case 'ymail.com':
+            case 'rocketmail.com':
+                $this->provider = new Yahoo();
+                break;
+            case 'aol.com':
+                $this->provider = new Aol();
                 break;
             default:
                 $this->provider = new Base();
@@ -96,7 +107,7 @@ class Email
         if ($length < $this->provider->min) return EmailError::min;
         if ($length > $this->provider->max) return EmailError::max;
 
-        if (!preg_match($this->provider->symbols, $this->user)) return EmailError::symbol;
+        if (!preg_match($this->provider->chars, $this->user)) return EmailError::symbol;
         if (!preg_match($this->provider->first, $this->user)) return EmailError::first;
         if (!preg_match($this->provider->last, $this->user)) return EmailError::last;
 
@@ -104,6 +115,7 @@ class Email
 
         if (preg_match('/[._-][._-]/', $this->user)) return EmailError::norepeat;
 
+        if ($this->provider->unique_schar && preg_match('/\.[\s\S]*\.|_[\s\S]*_/', $this->user)) return EmailError::unique_schar;
 
         $this->email = $this->user . '@' . $this->domain;
 

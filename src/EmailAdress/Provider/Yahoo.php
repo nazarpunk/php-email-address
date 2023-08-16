@@ -3,17 +3,17 @@ declare(strict_types=1);
 
 namespace EmailAdress\EmailAdress\Provider;
 
-class Google extends Base
+class Yahoo extends Base
 {
-    public ?string $name = 'google';
-    public bool $nodot = true;
-    public int $min = 6;
-    public int $max = 30;
-    public int $letter = 8;
+    public ?string $name = 'yahoo';
+    public bool $details = false;
+    public int $min = 4;
+    public int $max = 32;
+    public bool $unique_schar = true;
     public string $chars = /** @lang RegExp */
-        '/^[a-z0-9]+$/';
+        '/^[a-z0-9._]+$/';
     public string $first = /** @lang RegExp */
-        '/^[a-z0-9]/';
+        '/^[a-z]/';
     public string $last = /** @lang RegExp */
         '/[a-z0-9]$/';
 }

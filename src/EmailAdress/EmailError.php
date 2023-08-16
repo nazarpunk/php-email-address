@@ -14,4 +14,5 @@ enum EmailError
     case first;
     case last;
     case norepeat;
+    case unique_schar;
 }
