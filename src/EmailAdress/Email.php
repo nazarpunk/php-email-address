@@ -40,33 +40,9 @@ class Email
         $this->user = mb_strtolower($list[0]);
         $this->domain = mb_strtolower($list[1]);
 
-        switch ($this->domain) {
-            default:
-                $this->provider = new Provider(
-                    id: null,
-                    single_domain: false,
-                    domains: [],
-                    min: 1,
-                    max: 64,
-                    chars: 'a-z0-9._-',
-                    first: 'a-z0-9',
-                    last: 'a-z0-9_-',
-                    no_dot: false,
-                    dot_dot: true,
-                    dot_underscore: true,
-                    dot_minus: true,
-                    dot_digit: true,
-                    underscore_underscore: true,
-                    underscore_minus: true,
-                    minus_minus: true,
-                    many_dot: true,
-                    details: false,
-                    letter: 0,
-                    tested: null,
-                );
-                // https://stackoverflow.com/a/16491074/12800371
-                if (!preg_match('/^(?!-)(?:(?:[a-zA-Z\d][a-zA-Z\d\-]{0,61})?[a-zA-Z\d]\.){1,126}(?!\d+)[a-zA-Z\d]{1,63}$/', $this->domain)) return EmailError::domain;
-        }
+        $this->provider = Provider::fromDomain($this->domain);
+        // https://stackoverflow.com/a/16491074/12800371
+        if ($this->provider->id === null && !preg_match('/^(?!-)(?:(?:[a-zA-Z\d][a-zA-Z\d\-]{0,61})?[a-zA-Z\d]\.){1,126}(?!\d+)[a-zA-Z\d]{1,63}$/', $this->domain)) return EmailError::domain;
 
 
         $p = $this->provider;

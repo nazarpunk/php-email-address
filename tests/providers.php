@@ -50,58 +50,39 @@ gap: 1rem;
 </style>
 EOF;
 
-echo '<table><thead><tr>';
+$data = json_decode(file_get_contents('../src/EmailAdress/email.json', true), true);
 
-$reflect = new ReflectionClass((new Email('@ya.ru'))->provider);
-$props = $reflect->getProperties(ReflectionProperty::IS_PUBLIC);
+echo '<table><thead><tr><th></th>';
 
-foreach ($props as $prop) {
-    echo '<th>' . $prop->name . '</th>';
+function skip($n): bool
+{
+    return $n == 'domains';
+}
+
+foreach ($data[array_keys($data)[0]] as $k => $prop) {
+    if (skip($k)) continue;
+    echo '<th>' . $k . '</th>';
 }
 
 echo '</tr></thead><tbody>';
 
-foreach ([
-             '@gmail.com',
-             '@icloud.com',
-             '@hey.com',
-             '@gmx.com',
-             '@tuta.io',
-             '@proton.me',
-             '@ukr.net',
-             '@ya.ru',
-             '@mail.ru',
-             '@vk.com',
-             '@ro.ru',
-             '@yahoo.com',
-             '@aol.com',
-             '@hotmail.com',
-             '@meta.ua',
-             '@fastmail.com',
-             '@lycos.com',
-             '@hush.ai',
-             '@fuck.com',
-         ] as $email) {
-    $p = (new Email($email))->provider;
-    echo '<tr>';
-    foreach ($props as $prop) {
-        $m = $prop->name;
-        $v = $p->$m;
 
-        switch ($prop->getType()->getName()) {
-            case 'bool':
-                $v = $v === null ? '' : ($v ? '✅' : '❌');
-        }
-
+foreach ($data as $id => $values) {
+    echo '<tr><td>' . $id . '</td>';
+    foreach ($values as $k => $v) {
+        if (skip($k)) continue;
+        if ($v === null) $v = '';
+        elseif (is_bool($v)) $v = $v ? '✅' : '❌';
         echo '<td>' . $v . '</td>';
     }
     echo '</tr>';
 }
 
+
 echo '</tbody></table>';
 
-$adress = new Email('g.-max@hey.com');
+$adress = new Email('123@mail.com');
 
 echo '<pre>';
-//var_dump($adress);
+var_dump($adress);
 echo '</pre>';
