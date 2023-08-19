@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "patternProperties": {
+    "^[a-z_]+$": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "domains": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "single_domain": {
+          "type": "boolean",
+          "default": false
+        },
+        "min": {
+          "type": "integer",
+          "default": 1
+        },
+        "max": {
+          "type": "integer",
+          "default": 64
+        },
+        "chars": {
+          "type": "string",
+          "default": "a-z0-9._-"
+        },
+        "first": {
+          "type": "string",
+          "default": "a-z0-9"
+        },
+        "last": {
+          "type": "string",
+          "default": "a-z0-9_-"
+        },
+        "no_dot": {
+          "type": ["boolean", "null"],
+          "default": false
+        },
+        "dot_dot": {
+          "type": ["boolean", "null"],
+          "default": false
+        },
+        "dot_underscore": {
+          "type": ["boolean", "null"],
+          "default": false
+        },
+        "dot_minus": {
+          "type": ["boolean", "null"],
+          "default": false
+        },
+        "dot_digit": {
+          "type": ["boolean", "null"],
+          "default": true
+        },
+        "underscore_underscore": {
+          "type": ["boolean", "null"],
+          "default": false
+        },
+        "underscore_minus": {
+          "type": ["boolean", "null"],
+          "default": false
+        },
+        "minus_minus": {
+          "type": ["boolean", "null"],
+          "default": false
+        },
+        "many_dot": {
+          "type": ["boolean", "null"],
+          "default": true
+        },
+        "details": {
+          "type": ["boolean", "null"],
+          "default": true
+        },
+        "letter": {
+          "type": "integer",
+          "default": 0
+        },
+        "tested": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "required": [
+        "single_domain",
+        "domains",
+        "min",
+        "max",
+        "chars",
+        "first",
+        "last",
+        "no_dot",
+        "dot_dot",
+        "dot_underscore",
+        "dot_minus",
+        "dot_digit",
+        "underscore_underscore",
+        "underscore_minus",
+        "minus_minus",
+        "many_dot",
+        "details",
+        "letter",
+        "tested"
+      ]
+    }
+  }
+}

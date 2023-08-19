@@ -62,13 +62,13 @@ foreach ($props as $prop) {
 echo '</tr></thead><tbody>';
 
 foreach ([
+             '@gmail.com',
              '@icloud.com',
              '@hey.com',
              '@gmx.com',
              '@tuta.io',
              '@proton.me',
              '@ukr.net',
-             '@gmail.com',
              '@ya.ru',
              '@mail.ru',
              '@vk.com',
@@ -103,5 +103,5 @@ echo '</tbody></table>';
 $adress = new Email('g.-max@hey.com');
 
 echo '<pre>';
-var_dump($adress);
+//var_dump($adress);
 echo '</pre>';
