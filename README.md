@@ -67,6 +67,7 @@
 |           |   | yandex.com     |
 |           |   | yandex.kz      |
 |           |   | narod.ru       |
+| Proton    | ? |                |
 | Mail.ru   | ❌ | mail.ru        |
 |           |   | internet.ru    |
 |           |   | bk.ru          |

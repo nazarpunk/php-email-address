@@ -62,6 +62,12 @@ foreach ($props as $prop) {
 echo '</tr></thead><tbody>';
 
 foreach ([
+             '@icloud.com',
+             '@hey.com',
+             '@gmx.com',
+             '@tuta.io',
+             '@proton.me',
+             '@ukr.net',
              '@gmail.com',
              '@ya.ru',
              '@mail.ru',
@@ -70,8 +76,10 @@ foreach ([
              '@yahoo.com',
              '@aol.com',
              '@hotmail.com',
-             '@lycos.com',
              '@meta.ua',
+             '@fastmail.com',
+             '@lycos.com',
+             '@hush.ai',
              '@fuck.com',
          ] as $email) {
     $p = (new Email($email))->provider;
@@ -92,7 +100,7 @@ foreach ([
 
 echo '</tbody></table>';
 
-$adress = new Email('dffwwff@ya.ru');
+$adress = new Email('g.-max@hey.com');
 
 echo '<pre>';
 var_dump($adress);
