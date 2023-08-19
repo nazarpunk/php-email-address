@@ -19,6 +19,5 @@
     "files": [
       "src/EmailAdress/Email.php"
     ]
-  },
-  "version": "1.0.3"
+  }
 }
