@@ -584,7 +584,9 @@
   },
   "online_ua": {
     "universal_domains": false,
-    "domains": [],
+    "domains": [
+      "online.ua"
+    ],
     "min": 1,
     "max": 32,
     "chars": "a-z0-9.-",
