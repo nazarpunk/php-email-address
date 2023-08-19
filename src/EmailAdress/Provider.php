@@ -27,7 +27,7 @@ class Provider
         public ?bool   $minus_minus,
         public ?bool   $many_dot,
         public bool    $details,
-        public int     $letter,
+        public ?int    $letter,
         public ?bool   $tested,
     )
     {

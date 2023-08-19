@@ -6,8 +6,13 @@ namespace EmailAdress\EmailAdress;
 // https://en.wikipedia.org/wiki/Comparison_of_webmail_providers
 // https://developer.roman.grinyov.name/blog/92
 
+use ReflectionException;
+
 class Email
 {
+    /**
+     * @throws ReflectionException
+     */
     public function __construct(string $email)
     {
         $this->origin = trim($email);
@@ -32,6 +37,9 @@ class Email
     /** email provider */
     public Provider $provider;
 
+    /**
+     * @throws ReflectionException
+     */
     private function sanitize(): ?EmailError
     {
         $list = explode('@', $this->origin);
@@ -44,8 +52,10 @@ class Email
         // https://stackoverflow.com/a/16491074/12800371
         if ($this->provider->id === null && !preg_match('/^(?!-)(?:(?:[a-zA-Z\d][a-zA-Z\d\-]{0,61})?[a-zA-Z\d]\.){1,126}(?!\d+)[a-zA-Z\d]{1,63}$/', $this->domain)) return EmailError::domain;
 
-
         $p = $this->provider;
+
+        if ($p->id !== null && $p->universal_domains) $this->domain = $p->domains[0];
+
         $u = $this->user;
 
         if ($p->no_dot ?? false) $u = str_replace('.', '', $u);
@@ -74,7 +84,7 @@ class Email
 
         if (!($p->many_dot ?? true) && preg_match('/\.[\s\S]*\.|_[\s\S]*_/', $u)) return EmailError::many_dot;
 
-        if ($p->letter > 0 && $p->letter <= mb_strlen($u) && preg_match('/^[^a-z]+$/', $u)) return EmailError::letter;
+        if (($p->letter ?? 0) > 0 && $p->letter <= mb_strlen($u) && preg_match('/^[^a-z]+$/', $u)) return EmailError::letter;
 
         $this->email = $u . '@' . $this->domain;
 

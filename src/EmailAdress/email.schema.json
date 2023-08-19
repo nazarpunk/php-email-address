@@ -79,8 +79,8 @@
           "default": true
         },
         "letter": {
-          "type": "integer",
-          "default": 0
+          "type": ["integer", "null"],
+          "default": null
         },
         "tested": {
           "type": "boolean",

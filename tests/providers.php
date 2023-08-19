@@ -81,7 +81,7 @@ foreach ($data as $id => $values) {
 
 echo '</tbody></table>';
 
-$adress = new Email('123@mail.com');
+$adress = new Email('123@mailfence.com');
 
 echo '<pre>';
 var_dump($adress);
