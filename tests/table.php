@@ -24,7 +24,7 @@ foreach ($data[array_keys($data)[0]] as $k => $prop) {
     if (skip($k)) continue;
     $value = function ($text, $nk = null) use ($n, &$k): void {
         $k = $nk ?? $k;
-        echo '- `' . ($nk ?? $k) . '` ' . $text . $n;
+        echo '- ""' . ($nk ?? $k) . '"" ' . $text . $n;
     };
 
     switch ($k) {
@@ -84,13 +84,13 @@ foreach ($data[array_keys($data)[0]] as $k => $prop) {
     $header[] = $k;
 }
 
-echo $n . '| ' . implode(' | ', $header) . ' |' . $n;
+echo $n . implode(' | ', $header) . $n;
 
 $hmark = [];
 foreach ($header as $v) {
     $hmark[] = '---';
 }
-echo '| ' . implode(' | ', $hmark) . ' |' . $n;
+echo  implode(' | ', $hmark)  . $n;
 
 foreach ($data as $id => $values) {
     $row = [$id];
@@ -102,6 +102,6 @@ foreach ($data as $id => $values) {
         $row[] = $v;
     }
 
-    echo '| ' . implode(' | ', $row) . ' |' . $n;
+    echo  implode(' | ', $row) . $n;
 }
 

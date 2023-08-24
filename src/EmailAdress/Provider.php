@@ -3,9 +3,6 @@ declare(strict_types=1);
 
 namespace EmailAdress\EmailAdress;
 
-use ReflectionClass;
-use ReflectionException;
-
 class Provider
 {
     public function __construct(
@@ -33,31 +30,34 @@ class Provider
     {
     }
 
-    /**
-     * @throws ReflectionException
-     */
     public static function fromDomain(string $domain): Provider
     {
         static $data;
-        if ($data === null) {
-            $data = json_decode(file_get_contents('email.json', true), true);
-            foreach ($data as $id => $v) {
-                if (in_array($domain, $v['domains'])) {
-                    $reflection = new ReflectionClass('EmailAdress\EmailAdress\Provider');
-                    $instance = $reflection->newInstanceWithoutConstructor();
-                    $properties = $reflection->getProperties();
-                    foreach ($properties as $property) {
-                        $pn = $property->getName();
-                        if ($pn === 'id') {
-                            $property->setValue($instance, $id);
-                            continue;
-                        }
-                        $property->setValue($instance, $v[$property->getName()]);
-                    }
-                    return $instance;
-                }
-            }
-        }
+
+        $data ??= json_decode(file_get_contents('email.json', true), false);
+
+        foreach ($data as $id => $v) if (in_array($domain, $v->domains)) return new Provider(
+            id: $id,
+            universal_domains: $v->universal_domains,
+            domains: $v->domains,
+            min: $v->min,
+            max: $v->max,
+            chars: $v->chars,
+            first: $v->first,
+            last: $v->last,
+            no_dot: $v->no_dot,
+            dot_dot: $v->dot_dot,
+            dot_underscore: $v->dot_underscore,
+            dot_minus: $v->dot_minus,
+            dot_digit: $v->dot_digit,
+            underscore_underscore: $v->underscore_underscore,
+            underscore_minus: $v->underscore_minus,
+            minus_minus: $v->minus_minus,
+            many_dot: $v->many_dot,
+            details: $v->details,
+            letter: $v->letter,
+            tested: $v->tested,
+        );
 
         return new Provider(
             id: null,

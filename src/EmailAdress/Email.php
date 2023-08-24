@@ -6,13 +6,8 @@ namespace EmailAdress\EmailAdress;
 // https://en.wikipedia.org/wiki/Comparison_of_webmail_providers
 // https://developer.roman.grinyov.name/blog/92
 
-use ReflectionException;
-
 class Email
 {
-    /**
-     * @throws ReflectionException
-     */
     public function __construct(string $email)
     {
         $this->origin = trim($email);
@@ -37,9 +32,6 @@ class Email
     /** email provider */
     public Provider $provider;
 
-    /**
-     * @throws ReflectionException
-     */
     private function sanitize(): ?EmailError
     {
         $list = explode('@', $this->origin);

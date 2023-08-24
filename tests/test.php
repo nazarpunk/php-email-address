@@ -12,8 +12,9 @@ use EmailAdress\EmailAdress\Email;
 echo '<pre>';
 echo '<style>:root{color-scheme: dark}</style><pre>';
 
-$adress = new Email('ddd---____dddd@hotmail.com');
+$a = new Email('nazarpunk@gmail.com');
+$b = new Email('nazarpunk1@gmail.com');
 
-var_dump($adress);
+var_dump($a, $b);
 
 echo '</pre>';

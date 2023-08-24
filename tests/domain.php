@@ -15,13 +15,13 @@ $n = chr(10);
 
 $header = [''];
 
-echo '| | d | |' . $n . '| --- | --- | --- |' . $n;
+echo '| d |' . $n . '--------' . $n;
 
 foreach ($data as $k => $v) {
 
-    echo '| ' . $k . ' | ' . ($v['universal_domains'] ? '✅' : '❌') . ' | ' . $v['domains'][0] . ' |' . $n;
+    echo  $k . ' | ' . ($v['universal_domains'] ? '✅' : '❌') . ' | ' . $v['domains'][0] . $n;
     for ($i = 1; $i < count($v['domains']); $i++) {
-        echo '|  | ' . $v['domains'][$i] . ' |' . $n;
+        echo ' |  | ' . $v['domains'][$i]  . $n;
     }
 
 }
