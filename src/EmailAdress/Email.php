@@ -48,37 +48,35 @@ class Email
 
         if ($p->id !== null && $p->universal_domains) $this->domain = $p->domains[0];
 
-        $u = $this->user;
-
-        if ($p->no_dot ?? false) $u = str_replace('.', '', $u);
+        if ($p->no_dot ?? false) $this->user = str_replace('.', '', $this->user);
         if ($p->details) {
-            $pos = mb_strpos($u, '+');
-            if ($pos !== false) $u = substr($u, 0, $pos);
+            $pos = mb_strpos($this->user, '+');
+            if ($pos !== false) $this->user = substr($this->user, 0, $pos);
         }
 
-        $length = mb_strlen($u);
+        $length = mb_strlen($this->user);
         if ($length < $p->min) return EmailError::min;
         if ($length > $p->max) return EmailError::max;
 
-        if (!preg_match('/^[' . $p->chars . ']+$/', $u)) return EmailError::chars;
-        if (!preg_match('/^[' . $p->first . ']/', $u)) return EmailError::first;
-        if (!preg_match('/[' . $p->last . ']$/', $u)) return EmailError::last;
+        if (!preg_match('/^[' . $p->chars . ']+$/', $this->user)) return EmailError::chars;
+        if (!preg_match('/^[' . $p->first . ']/', $this->user)) return EmailError::first;
+        if (!preg_match('/[' . $p->last . ']$/', $this->user)) return EmailError::last;
 
-        if (!($p->dot_dot ?? true) && str_contains($u, '..')) return EmailError::dot_dot;
-        if (!($p->dot_underscore ?? true) && (str_contains($u, '._') || str_contains($u, '_.'))) return EmailError::dot_underscore;
-        if (!($p->dot_minus ?? true) && (str_contains($u, '.-') || str_contains($u, '-.'))) return EmailError::dot_minus;
-        if (!($p->dot_digit ?? true) && preg_match('/\.\d|\d\./', $u)) return EmailError::dot_digit;
+        if (!($p->dot_dot ?? true) && str_contains($this->user, '..')) return EmailError::dot_dot;
+        if (!($p->dot_underscore ?? true) && (str_contains($this->user, '._') || str_contains($this->user, '_.'))) return EmailError::dot_underscore;
+        if (!($p->dot_minus ?? true) && (str_contains($this->user, '.-') || str_contains($this->user, '-.'))) return EmailError::dot_minus;
+        if (!($p->dot_digit ?? true) && preg_match('/\.\d|\d\./', $this->user)) return EmailError::dot_digit;
 
-        if (!($p->underscore_underscore ?? true) && str_contains($u, '__')) return EmailError::underscore_underscore;
-        if (!($p->underscore_minus ?? true) && (str_contains($u, '_-') || str_contains($u, '-_'))) return EmailError::underscore_minus;
+        if (!($p->underscore_underscore ?? true) && str_contains($this->user, '__')) return EmailError::underscore_underscore;
+        if (!($p->underscore_minus ?? true) && (str_contains($this->user, '_-') || str_contains($this->user, '-_'))) return EmailError::underscore_minus;
 
-        if (!($p->minus_minus ?? true) && str_contains($u, '--')) return EmailError::minus_minus;
+        if (!($p->minus_minus ?? true) && str_contains($this->user, '--')) return EmailError::minus_minus;
 
-        if (!($p->many_dot ?? true) && preg_match('/\.[\s\S]*\.|_[\s\S]*_/', $u)) return EmailError::many_dot;
+        if (!($p->many_dot ?? true) && preg_match('/\.[\s\S]*\.|_[\s\S]*_/', $this->user)) return EmailError::many_dot;
 
-        if (($p->letter ?? 0) > 0 && $p->letter <= mb_strlen($u) && preg_match('/^[^a-z]+$/', $u)) return EmailError::letter;
+        if (($p->letter ?? 0) > 0 && $p->letter <= mb_strlen($this->user) && preg_match('/^[^a-z]+$/', $this->user)) return EmailError::letter;
 
-        $this->email = $u . '@' . $this->domain;
+        $this->email = $this->user . '@' . $this->domain;
 
         return null;
     }
