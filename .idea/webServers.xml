@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="11cb8872-1947-457a-9405-82cf0883ca9e" name="email-adress" url="https://venus.agency/.db/email-address">
+        <fileTransfer rootFolder="/var/www/html/venus/.db/email-address" accessType="SFTP" host="185.67.1.222" port="22" sshConfigId="61ae9d5b-3ee2-4b2c-82f1-bba7ddde74a8" sshConfig="root@185.67.1.222:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
